@@ -44,32 +44,7 @@ function displayBookmark(index) {
             </tr>
             `;
   tableContent.innerHTML += newBookmark;
-
-  function clearInput() {
-    siteName.value = "";
-    siteURL.value = "";
-  }
-
-  function deleteBookmark(e) {
-    tableContent.innerHTML = "";
-    var deletedIndex = e.target.dataset.index;
-    bookmarks.splice(deletedIndex, 1);
-    for (var k = 0; k < bookmarks.length; k++) {
-      displayBookmark(k);
-    }
-    localStorage.setItem("bookmarksList", JSON.stringify(bookmarks));
-  }
-
-  function visitWebsite(e) {
-    var websiteIndex = e.target.dataset.index;
-    var httpsRegex = /^https?:\/\//;
-    if (httpsRegex.test(bookmarks[websiteIndex].siteURL)) {
-      open(bookmarks[websiteIndex].siteURL);
-    } else {
-      open(`https://${bookmarks[websiteIndex].siteURL}`);
-    }
-  }
-
+  
   submitBtn.addEventListener("click", function () {
     if (
       siteName.classList.contains("is-valid") &&
@@ -108,6 +83,31 @@ function displayBookmark(index) {
     }
   }
 }
+
+ function clearInput() {
+    siteName.value = "";
+    siteURL.value = "";
+  }
+
+  function deleteBookmark(e) {
+    tableContent.innerHTML = "";
+    var deletedIndex = e.target.dataset.index;
+    bookmarks.splice(deletedIndex, 1);
+    for (var k = 0; k < bookmarks.length; k++) {
+      displayBookmark(k);
+    }
+    localStorage.setItem("bookmarksList", JSON.stringify(bookmarks));
+  }
+
+  function visitWebsite(e) {
+    var websiteIndex = e.target.dataset.index;
+    var httpsRegex = /^https?:\/\//;
+    if (httpsRegex.test(bookmarks[websiteIndex].siteURL)) {
+      open(bookmarks[websiteIndex].siteURL);
+    } else {
+      open(`https://${bookmarks[websiteIndex].siteURL}`);
+    }
+  }
 
 function capitalize(str) {
   let strArr = str.split("");
