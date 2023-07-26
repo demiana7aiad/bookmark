@@ -45,26 +45,6 @@ function displayBookmark(index) {
             `;
   tableContent.innerHTML += newBookmark;
   
-  submitBtn.addEventListener("click", function () {
-    if (
-      siteName.classList.contains("is-valid") &&
-      siteURL.classList.contains("is-valid")
-    ) {
-      var bookmark = {
-        siteName: capitalize(siteName.value),
-        siteURL: siteURL.value,
-      };
-      bookmarks.push(bookmark);
-      localStorage.setItem("bookmarksList", JSON.stringify(bookmarks));
-      displayBookmark(bookmarks.length - 1);
-      clearInput();
-      siteName.classList.remove("is-valid");
-      siteURL.classList.remove("is-valid");
-    } else {
-      boxModal.classList.remove("d-none");
-    }
-  });
-
   deleteBtns = document.querySelectorAll(".btn-delete");
   if (deleteBtns) {
     for (var j = 0; j < deleteBtns.length; j++) {
@@ -88,6 +68,30 @@ function displayBookmark(index) {
     siteName.value = "";
     siteURL.value = "";
   }
+function capitalize(str) {
+  let strArr = str.split("");
+  strArr[0] = strArr[0].toUpperCase();
+  return strArr.join("");
+}
+submitBtn.addEventListener("click", function () {
+    if (
+      siteName.classList.contains("is-valid") &&
+      siteURL.classList.contains("is-valid")
+    ) {
+      var bookmark = {
+        siteName: capitalize(siteName.value),
+        siteURL: siteURL.value,
+      };
+      bookmarks.push(bookmark);
+      localStorage.setItem("bookmarksList", JSON.stringify(bookmarks));
+      displayBookmark(bookmarks.length - 1);
+      clearInput();
+      siteName.classList.remove("is-valid");
+      siteURL.classList.remove("is-valid");
+    } else {
+      boxModal.classList.remove("d-none");
+    }
+  });
 
   function deleteBookmark(e) {
     tableContent.innerHTML = "";
@@ -108,12 +112,6 @@ function displayBookmark(index) {
       open(`https://${bookmarks[websiteIndex].siteURL}`);
     }
   }
-
-function capitalize(str) {
-  let strArr = str.split("");
-  strArr[0] = strArr[0].toUpperCase();
-  return strArr.join("");
-}
 
 var nameRegex = /^\w{3,}(\s+\w+)*$/;
 var urlRegex = /^(https?:\/\/)?(w{3}\.)?\w+\.\w{2,}\/?(:\d{2,5})?(\/\w+)*$/;
